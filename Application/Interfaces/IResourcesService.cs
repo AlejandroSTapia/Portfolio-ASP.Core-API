@@ -9,6 +9,7 @@ namespace Application.Interfaces
 {
 	public interface IResourcesService
 	{
+		Task<IEnumerable<Resources>> GetAllResourcesAsync();
 		Task<Resources> GetProductDetailsAsync(int id);
 	}
 }

@@ -9,8 +9,12 @@ namespace Infraestructure
 {
 	public static class DependencyContainer
 	{
-		public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, ConnectionStringOptions options)
+		public static IServiceCollection AddInfrastructureServices(
+			this IServiceCollection services, ConnectionStringOptions options)
 		{
+			// Registrar las opciones en el contenedor
+			services.AddSingleton(options);
+
 			services.AddScoped<IResourcesRepository, ResourceRepository>();
 			//services.AddDotNetCoreMicrosoftSQL(options.ConnectionPorfolio, "Portfolio");
 			// o
@@ -18,15 +22,22 @@ namespace Infraestructure
 			// Registrar la configuración individualmente
 			services.Configure<ConnectionStringOptions>(config =>
 			{
-				config.ConnectionPorfolio = options.ConnectionPorfolio;
+				config.ConnectionPortfolio = options.ConnectionPortfolio;
 				// Configura otras propiedades de ConnectionStringOptions si las tienes
-				config.MicrosoftEntraId = options.MicrosoftEntraId;
+				//config.MicrosoftEntraId = options.MicrosoftEntraId;
 			});
 
 			// Obtener la cadena de conexión y registrar el DbContext
-			var connectionString = options.ConnectionPorfolio;
+			var connectionString = options.ConnectionPortfolio;
+			if (string.IsNullOrWhiteSpace(connectionString))
+			{
+				throw new InvalidOperationException("The ConnectionPorfolio connection string is not configured.");
+			}
+
 			services.AddDbContext<ApplicationDbContext>(dbOptions =>
-				dbOptions.UseSqlServer(connectionString));
+				dbOptions.UseSqlServer(options.ConnectionPortfolio)
+				.EnableSensitiveDataLogging() // Muestra valores sensibles como la cadena de conexión.
+			 .LogTo(Console.WriteLine)); 
 
 			return services;
 		}

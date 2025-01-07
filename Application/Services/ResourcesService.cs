@@ -7,6 +7,22 @@ namespace Application.Services
 	{
 		private readonly IResourcesRepository _resourcesRepository;
 
+		public ResourcesService(IResourcesRepository resourcesRepository)
+		{
+			_resourcesRepository = resourcesRepository;
+		}
+
+		public async Task<IEnumerable<Resources>> GetAllResourcesAsync()
+		{
+			var resources = await _resourcesRepository.GetAllResourcesAsync();
+
+			if (resources == null)
+			{
+				throw new Exception("Not found");
+			}
+			return resources;
+		}
+
 		public async Task<Resources> GetProductDetailsAsync(int id)
 		{
 			var resources = await _resourcesRepository.GetResourceByIdAsync(id);

@@ -1,12 +1,12 @@
 using Application;
 using Infraestructure;
 using Infraestructure.Configuration;
+using Infraestructure.DependencyInjections;
 
 var builder = WebApplication.CreateBuilder(args);
-var builderConfOptions = new ConnectionStringOptions();
 
-// Add services to the container.
-builder.Services.AddInfrastructureServices(builderConfOptions);
+builder.Services.AddApplicationDependencies(builder.Configuration);
+
 builder.Services.AddApplicationServices();
 
 builder.Services.AddControllers();
