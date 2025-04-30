@@ -23,5 +23,13 @@ namespace Infraestructure.Repositories
 		{
 			return await _context.Resources.FindAsync(id);
 		}
+
+		public async Task<string?> GetValueAsync(string name)
+		{
+			return await _context.Resources
+				.Where(r => r.Name == name)
+				.Select(r => r.Value)
+				.FirstOrDefaultAsync();
+		}
 	}
 }

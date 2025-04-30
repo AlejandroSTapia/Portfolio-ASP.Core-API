@@ -32,9 +32,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+	app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();
+app.UseRouting();
 
 // Use the CORS policy
 app.UseCors("AllowAll");

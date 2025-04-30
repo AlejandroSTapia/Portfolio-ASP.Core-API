@@ -8,7 +8,8 @@ namespace Application
 	{
 		public static IServiceCollection AddApplicationServices(this IServiceCollection services)
 		{
-			services.AddScoped<IResourcesService, ResourcesService>();			
+			services.AddScoped<IResourcesService, ResourcesService>();
+			services.AddScoped<IEmailService, SendGridEmailService>();
 
 			return services;
 		}
