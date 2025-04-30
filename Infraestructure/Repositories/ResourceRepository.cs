@@ -16,7 +16,15 @@ namespace Infraestructure.Repositories
 
 		public async Task<IEnumerable<Resources>> GetAllResourcesAsync()
 		{
-			return await _context.Resources.ToListAsync();
+			try
+			{
+                return await _context.Resources.ToListAsync();
+            }
+			catch (Exception ex)
+			{
+				Console.WriteLine("Error retrieving resources: " + ex.Message);
+				throw;
+			}
 		}
 
 		public async Task<Resources> GetResourceByIdAsync(int id)

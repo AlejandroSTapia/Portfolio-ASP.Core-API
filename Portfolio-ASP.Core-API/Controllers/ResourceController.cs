@@ -20,8 +20,18 @@ namespace Portfolio_ASP.Core_API.Controllers
 		[Route("GetResources")]
 		public async Task<IActionResult> GetAllResourcesAsync()
 		{
-			var resources = await _resourcesService.GetAllResourcesAsync();
-			return Ok(resources);
+			try
+			{
+				var resources = await _resourcesService.GetAllResourcesAsync();
+				return Ok(resources);
+			}
+			catch (Exception ex)
+			{
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                return StatusCode(500, ex.Message);
+			}
+
 		}
 	}
 }
