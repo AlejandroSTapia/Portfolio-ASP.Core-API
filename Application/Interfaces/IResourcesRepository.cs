@@ -11,5 +11,6 @@ namespace Application.Interfaces
 	{
 		Task<IEnumerable<Resources>> GetAllResourcesAsync();
 		Task<Resources> GetResourceByIdAsync(int resourceId);
+		Task<string?> GetValueAsync(string key);
 	}
 }
