@@ -20,6 +20,7 @@ builder.Services.AddCors(options =>
 	options.AddPolicy("AllowAll", builder =>
 	{
 		builder.AllowAnyOrigin()
+		.WithOrigins("https://mango-plant-0bb30020f.6.azurestaticapps.net")
 			   .AllowAnyMethod()
 			   .AllowAnyHeader();
 	});
